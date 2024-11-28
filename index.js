@@ -1,25 +1,72 @@
 // Here I'm creatin a team builder
-import express from "express";
-import bodyParser from "body-parser";
+function create(){
+  //Getting a sring with the name of players
+  let players = document.querySelector('textarea#team').value.trim(); 
 
-const app = express();
-const port = 3000;
+  // Ensure input isn't empty
+  if (!players) {
+    alert("Please enter player names!");
+    return;
+  }
 
-let players = ["Filipe", "Joao", "Marcos", "Junior", "Danilo", "Guga", "Jef", "Bob", "Maniac", "Marquin", "Pedro", "Lan", "Alisson"];
+  // Turning each name into an separate value in an array
+  const arrPlayers = players.split(" "); 
+  const playersNum = arrPlayers.length; // Array size
 
-app.use(express.static("public"));
-app.use(bodyParser.urlencoded({ extended: true }));
+  // Team size
+  let size = Number(document.querySelector('select#size').value); 
 
-app.get("/", (req, res) => {
-  res.render("index.ejs", {players});
-});
+  // Ensure the team size is valid
+  if (size < 1 || size > playersNum) {
+    alert("Please select a valid team size!");
+    return;
+  }
 
-app.post("/team", (req, res) => {
-  const team = [];
+  // Amount of teams
+  const numberOfTeam = Math.ceil(playersNum / size); 
+
+  // Creating array of teams
+  let teams = Array.from({ length: numberOfTeam }, () => []);
   
-  res.redirect("/");
-})
+  // Function to check if a player is in a team
+  function isInATeamFun(name) {
+    // Loop over the teams
+    for (let i = 0; i < teams.length; i++) { 
+      if (teams[i].includes(name)) { //Checking if player is in teams[i] 
+        return true;
+      }
+    }
+    return false; // Return false if player name isn't there
+  }
 
-app.listen(port, () => {
-  console.log(`Linstening on port ${port}`);
-});
+  //Counter to know how many players are in a team
+  let counterPlayerInTeam = 0;
+
+  function teamBuilder(team) {
+    while (team.length < size && counterPlayerInTeam < playersNum) {
+      let randomNumber = Math.floor((Math.random() * playersNum)); //Random player index
+      let player = arrPlayers[randomNumber];
+      
+      // Check if player is already in a team if not he is assigned to a team
+      if (!isInATeamFun(player)) {
+        team.push(player); 
+        counterPlayerInTeam++;
+      }
+    }
+  }
+  
+  //Team builder
+  for (let i = 0; i < numberOfTeam; i++) {
+    teamBuilder(teams[i])
+  }
+
+  console.log("Teams:", teams);
+
+  let response = document.querySelector('div#out');
+
+  response.innerHTML = `
+  <h2>Teams:</h2> 
+  ${teams.map((team, index) => `<p>Team ${index + 1}: ${team.join(", ")}</p>`).join("<br>")}
+  `;
+
+}
