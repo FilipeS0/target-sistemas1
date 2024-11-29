@@ -64,9 +64,6 @@ function create(){
 
   let response = document.querySelector('div#out');
 
-  response.innerHTML = `
-  <h2>Teams:</h2> 
-  ${teams.map((team, index) => `<p>Team ${index + 1}: ${team.join(", ")}</p>`).join("<br>")}
-  `;
+  response.innerHTML = `${teams.map((team, index) => `<p>Team ${index + 1}: ${team.join(", ")}</p>`).join("<br>")}`;
 
 }
