@@ -66,4 +66,11 @@ function create(){
 
   response.innerHTML = `${teams.map((team, index) => `<p>Team ${index + 1}: ${team.join(", ")}</p>`).join("<br>")}`;
 
+  
+  response.innerHTML = teams
+  .map(
+    (team, index) =>
+      `<p>Team ${index + 1}: <span>${team.join(", ")}</span></p>`
+  )
+  .join(""); 
 }
