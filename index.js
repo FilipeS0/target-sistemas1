@@ -22,10 +22,22 @@ function create(){
 
   // Convert names into an array
   const arrPlayers = players.split(" ");
-  const playersNum = arrPlayers.length;
 
-  // Validate team size
-  let size = Number(document.querySelector("select#size").value);
+  function hasDuplicates(arr) {
+    return new Set(arr).size !== arr.length;
+  }
+  
+  if (hasDuplicates(arrPlayers)) {
+    showAlert("Duplicate player names found. Please ensure all players have unique names.");
+    return;
+  }
+  
+  const playersNum = arrPlayers.length; // Array size
+
+  // Team size
+  let size = Number(document.querySelector('select#size').value);
+
+  // Ensure the team size is valid
   if (size < 1 || size > playersNum) {
     showAlert("Please select a valid team size!");
     return;
