@@ -1,24 +1,33 @@
+function showAlert(message, type = "error") {
+  const alertDiv = document.querySelector("#alert");
+
+  // Set the text and class based on the type
+  alertDiv.textContent = message;
+  alertDiv.className = `alert show ${type === "success" ? "success" : ""}`;
+
+  // Automatically hide the alert after 3 seconds
+  setTimeout(() => {
+    alertDiv.classList.remove("show");
+  }, 3000);
+}
+
+
 // Here I'm creatin a team builder
 function create(){
-  //Getting a sring with the name of players
-  let players = document.querySelector('textarea#team').value.trim(); 
-
-  // Ensure input isn't empty
+  let players = document.querySelector("textarea#team").value.trim();
   if (!players) {
-    alert("Please enter player names!");
+    showAlert("Please enter player names!");
     return;
   }
 
-  // Turning each name into an separate value in an array
-  const arrPlayers = players.split(" "); 
-  const playersNum = arrPlayers.length; // Array size
+  // Convert names into an array
+  const arrPlayers = players.split(" ");
+  const playersNum = arrPlayers.length;
 
-  // Team size
-  let size = Number(document.querySelector('select#size').value); 
-
-  // Ensure the team size is valid
+  // Validate team size
+  let size = Number(document.querySelector("select#size").value);
   if (size < 1 || size > playersNum) {
-    alert("Please select a valid team size!");
+    showAlert("Please select a valid team size!");
     return;
   }
 
@@ -73,4 +82,6 @@ function create(){
       `<p>Team ${index + 1}: <span>${team.join(", ")}</span></p>`
   )
   .join(""); 
+
+  showAlert("Teams successfully created!", "success");
 }

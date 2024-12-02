@@ -84,3 +84,23 @@ div#out p span {
   font-weight: normal;
   color: #555;
 }
+
+.alert {
+  grid-column: 6/9; /* Adjust to fit your grid layout */
+  grid-row: 3; /* Place near inputs */
+  padding: 10px;
+  border-radius: 5px;
+  color: #fff;
+  background-color: #d9534f; /* Bootstrap-like red for errors */
+  display: none; /* Initially hidden */
+  text-align: center;
+  font-size: 14px;
+}
+
+.alert.success {
+  background-color: #5cb85c; /* Green for success */
+}
+
+.alert.show {
+  display: block; /* Display the alert when needed */
+}
